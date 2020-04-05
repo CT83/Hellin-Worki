@@ -5,7 +5,7 @@ __pycache__/
 .idea
 # C extensions
 *.so
-.idea
+static/ui/node_modules
 # Distribution / packaging
 .Python
 build/
