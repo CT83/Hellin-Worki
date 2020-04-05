@@ -40,10 +40,16 @@ That's it!
 
   
 
-  ## The Build!
+## The Build!
 
-  How far along am I?
+How far along am I?
 
-  I just got the video conferencing demos by Twilio and the Hotword Detection working, so far so good!
+I just got the video conferencing demos by Twilio and the Hotword Detection working, so far so good!
 
-  
+## How to Run
+
+> Coming Soon
+
+## Infrastructure 
+
+> Coming Soon  
