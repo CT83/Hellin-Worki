@@ -1,5 +1,7 @@
 # Hellin' Worki - Now, Joe's just a shout away
 
+![Image Logo](logos/linkedin_banner_image_1.png)
+
 Hellin Worki is a video conferencing platform which seamlessly dials your coworkers when you call out their name, a  "Yes" and you are connected. 
 
 ## Problem
