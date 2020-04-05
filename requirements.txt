@@ -1,0 +1,2 @@
+twilio==6.2.dev0
+fake-factory==0.5.3
