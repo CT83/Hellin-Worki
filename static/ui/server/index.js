@@ -1,63 +1,67 @@
-'use strict';
+const config = require('./config');
+const express = require('express');
+const bodyParser = require('body-parser');
+const pino = require('express-pino-logger')();
+const { chatToken, videoToken, voiceToken } = require('./tokens');
 
-/**
- * Load Twilio configuration from .env config file - the following environment
- * variables should be set:
- * process.env.TWILIO_ACCOUNT_SID
- * process.env.TWILIO_API_SID
- * process.env.TWILIO_API_SECRET
- */
-require('dotenv').load();
+const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(pino);
 
-var http = require('http');
-var path = require('path');
-var AccessToken = require('twilio').jwt.AccessToken;
-var VideoGrant = AccessToken.VideoGrant;
-var express = require('express');
+const sendTokenResponse = (token, res) => {
+  res.set('Content-Type', 'application/json');
+  res.send(
+    JSON.stringify({
+      token: token.toJwt()
+    })
+  );
+};
 
-// Max. period that a Participant is allowed to be in a Room (currently 14400 seconds or 4 hours)
-const MAX_ALLOWED_SESSION_DURATION = 14400;
-
-// Create Express webapp.
-var app = express();
-
-// Set up the paths for the examples.
-[
-  'bandwidthconstraints',
-  'codecpreferences',
-  'dominantspeaker',
-  'localvideofilter',
-  'localvideosnapshot',
-  'mediadevices',
-  'networkquality',
-  'reconnection',
-  'screenshare',
-  'localmediacontrols',
-  'remotereconnection'
-  
-].forEach(function(example) {
-  var examplePath = path.join(__dirname, `../examples/${example}/public`);
-  app.use(`/${example}`, express.static(examplePath));
+app.get('/api/greeting', (req, res) => {
+  const name = req.query.name || 'World';
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify({ greeting: `Hello ${name}!` }));
 });
 
-// Set up the path for the quickstart.
-var quickstartPath = path.join(__dirname, '../quickstart/public');
-app.use('/quickstart', express.static(quickstartPath));
-
-// Set up the path for the examples page.
-var examplesPath = path.join(__dirname, '../examples');
-app.use('/examples', express.static(examplesPath));
-
-/**
- * Default to the Quick Start application.
- */
-app.get('/', function(request, response) {
-  response.redirect('/quickstart');
+app.get('/chat/token', (req, res) => {
+  const identity = req.query.identity;
+  const token = chatToken(identity, config);
+  sendTokenResponse(token, res);
 });
 
-// Create http server and run it.
-var server = http.createServer(app);
-var port = process.env.PORT || 3000;
-server.listen(port, function() {
-  console.log('Express server running on *:' + port);
+app.post('/chat/token', (req, res) => {
+  const identity = req.body.identity;
+  const token = chatToken(identity, config);
+  sendTokenResponse(token, res);
 });
+
+app.get('/video/token', (req, res) => {
+  const identity = req.query.identity;
+  const room = req.query.room;
+  const token = videoToken(identity, room, config);
+  sendTokenResponse(token, res);
+});
+
+app.post('/video/token', (req, res) => {
+  const identity = req.body.identity;
+  const room = req.body.room;
+  const token = videoToken(identity, room, config);
+  sendTokenResponse(token, res);
+});
+
+app.get('/voice/token', (req, res) => {
+  const identity = req.body.identity;
+  const token = voiceToken(identity, config);
+  sendTokenResponse(token, res);
+});
+
+app.post('/voice/token', (req, res) => {
+  const identity = req.body.identity;
+  const token = voiceToken(identity, config);
+  sendTokenResponse(token, res);
+});
+
+app.listen(3001, () =>
+  console.log('Express server is running on localhost:3001')
+);
