@@ -3,6 +3,7 @@ import os
 from faker import Factory
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from twilio.base.exceptions import TwilioRestException
 from twilio.jwt.access_token import AccessToken
 from twilio.jwt.access_token.grants import VideoGrant
 from twilio.rest import Client
@@ -32,15 +33,22 @@ def token_room():
 
     token = AccessToken(account_sid, api_key, api_secret)
     client = Client(account_sid, auth_token)
-    room = client.video.rooms.create(
-        enable_turn=True,
-        type='peer-to-peer',
-        unique_name=room_name
-    )
+
+    try:
+        room = client.video.rooms.create(
+            enable_turn=True,
+            type='peer-to-peer',
+            unique_name=room_name
+        )
+    except TwilioRestException as e:
+        room = client.video.rooms.list(unique_name=room_name, limit=1)[0]
+        if not room:
+            raise AttributeError("Room Could not be created!")
+
     token.identity = identity
-    token_s = str(token.to_jwt().decode("utf-8"))
-    grant = VideoGrant(room=room)
+    grant = VideoGrant(room=room.unique_name)
     token.add_grant(grant)
+    token_s = str(token.to_jwt().decode("utf-8"))
     return jsonify({'identity': identity, 'token': token_s})
 
 
