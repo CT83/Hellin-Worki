@@ -10,7 +10,6 @@ class Annyang {
     start() {
         if (annyang) {
             annyang.start()
-            console.log("Annyang is now running!")
         }
     }
 

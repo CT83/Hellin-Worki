@@ -3,6 +3,7 @@ import os
 from faker import Factory
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from flask_socketio import SocketIO, emit
 from twilio.base.exceptions import TwilioRestException
 from twilio.jwt.access_token import AccessToken
 from twilio.jwt.access_token.grants import VideoGrant
@@ -11,6 +12,7 @@ from twilio.rest import Client
 app = Flask(__name__)
 fake = Factory.create()
 CORS(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 # Substitute your Twilio AccountSid and ApiKey details
 account_sid = os.environ['TWILIO_ACCOUNT_SID']
@@ -72,5 +74,33 @@ def delete_all_rooms():
     })
 
 
+@socketio.on('register')
+def test_message(message):
+    print(message)
+    emit('my response', {'data': message['data']})
+
+
+@socketio.on('call')
+def test_message(message):
+    print("incoming calls")
+    emit('incoming-call', {'data': message['data']}, broadcast=True)
+
+
+@socketio.on('my broadcast event')
+def test_message(message):
+    emit('my response', {'data': message['data']}, broadcast=True)
+
+
+@socketio.on('connect', )
+def test_connect():
+    print("Someone connected!")
+    emit('api', {'data': 'Connected'})
+
+
+@socketio.on('disconnect')
+def test_disconnect():
+    print('Client disconnected')
+
+
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    socketio.run(debug=True, port=5000, app=app)

@@ -44,7 +44,7 @@ const VideoChat = () => {
     let render;
     if (token) {
         render = (
-            <SharedDesk roomName={roomName} token={token} handleLogout={handleLogout} />
+            <SharedDesk roomName={roomName} token={token} handleLogout={handleLogout} username={username} />
         );
     } else {
         render = (
