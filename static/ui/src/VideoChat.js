@@ -1,10 +1,13 @@
 import React, { useState, useCallback } from 'react';
 import Lobby from './Lobby';
 import Room from './Room';
+var Chance = require('chance');
+
 
 const VideoChat = () => {
+    var chance = new Chance();
     const [username, setUsername] = useState('');
-    const [roomName, setRoomName] = useState('');
+    const [roomName, setRoomName] = useState(chance.word({ syllables: 2 }));
     const [token, setToken] = useState(null);
 
     const handleUsernameChange = useCallback(event => {
