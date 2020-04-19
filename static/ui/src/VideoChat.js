@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import Lobby from './Lobby';
 import Room from './Room';
+import SharedDesk from './SharedDesk';
 var Chance = require('chance');
 
 
@@ -43,7 +44,7 @@ const VideoChat = () => {
     let render;
     if (token) {
         render = (
-            <Room roomName={roomName} token={token} handleLogout={handleLogout} />
+            <SharedDesk roomName={roomName} token={token} handleLogout={handleLogout} />
         );
     } else {
         render = (
