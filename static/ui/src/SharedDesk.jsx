@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Video from 'twilio-video';
-import Participant from './Participant';
 import Room from './Room';
 import annyang from './Annyang'
 
@@ -12,9 +10,11 @@ const SharedDesk = ({ roomName, token, handleLogout, handleDisconnect }) => {
 
     useEffect(() => {
         var commands = {
-            'hello': () => {
-                console.log("Someone said hello?")
+            'Hey Rohit': () => {
+                setTalk(true)
             },
+            'Yes': () => { setTalk(true) },
+            'Hangup': () => { setTalk(false) }
         };
         annyang.addCommands(commands)
         annyang.start()
