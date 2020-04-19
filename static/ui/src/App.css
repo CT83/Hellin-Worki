@@ -77,6 +77,8 @@ button {
   padding: 0.4em;
   border-radius: 6px;
   border: 1px solid transparent;
+  margin: 15px;
+  min-width: 50px;
 }
 button:hover {
   filter: brightness(150%);

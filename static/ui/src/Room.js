@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Video from 'twilio-video';
 import Participant from './Participant';
 
-const Room = ({ roomName, token, handleLogout }) => {
+const Room = ({ roomName, token, handleLogout, setTalk, talk }) => {
     const [room, setRoom] = useState(null);
     const [participants, setParticipants] = useState([]);
 
@@ -45,11 +45,14 @@ const Room = ({ roomName, token, handleLogout }) => {
         <Participant key={participant.sid} participant={participant} />
     ));
 
+    const handleHangup = () => {
+        setTalk(!talk)
+    }
+
     return (
         <div className="room">
             <h2>Room: {roomName}</h2>
-            <button onClick={handleLogout}>Log out2</button>
-            <button onClick={handleLogout}>Hangup</button>
+            <button onClick={handleHangup}>Hangup</button>
             <div className="local-participant">
                 {room ? (
                     <Participant

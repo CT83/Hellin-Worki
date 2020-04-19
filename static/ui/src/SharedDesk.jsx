@@ -8,7 +8,7 @@ const ENDPOINT = "http://localhost:5000";
 const SharedDesk = ({ roomName, token, handleLogout, username }) => {
 
     const [talk, setTalk] = useState(false);
-    const [response, setResponse] = useState("");
+    const [otherUsers, setOtherUsers] = useState([]);
     const [socket, setSocket] = useState(socketIOClient(ENDPOINT))
 
     useEffect(() => {
@@ -31,9 +31,11 @@ const SharedDesk = ({ roomName, token, handleLogout, username }) => {
         annyang.addCommands(commands)
         annyang.start()
 
-        socket.on("api", data => {
-            setResponse(data);
+        socket.on("user-registered", data => {
+            console.log(data.users)
+            setOtherUsers(data.users);
         });
+
         socket.emit(
             'register',
             {
@@ -52,14 +54,16 @@ const SharedDesk = ({ roomName, token, handleLogout, username }) => {
     return (
 
         <div>
-            <h1> You are sitting at the desk <em>{roomName}</em> with ...</h1>
-            <p> Say "Hi ..." to talk to them.</p>
+            <h1> Others on the Desk <em>{roomName}</em> :
+            {otherUsers.map((item, index) => (
+                username != item ? " " + item : null
+            ))}
+            </h1>
+            {otherUsers.length > 1 ? <p> Say "Hey ..." to talk to them.</p> : null}
             <button onClick={() => setTalk(!talk)}>Talk</button>
-            {talk ? <Room roomName={roomName} token={token} handleLogout={handleLogout} />
+            <button onClick={handleLogout} style={{right:20,position:"absolute"}}>Log out!</button>
+            {talk ? <Room roomName={roomName} token={token} handleLogout={handleLogout} talk={talk} setTalk={setTalk} />
                 : null}
-            <p>
-                It's {response.data}
-            </p>
         </div>
     );
 };

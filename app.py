@@ -1,8 +1,10 @@
+import json
 import os
 
 from faker import Factory
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from flask_redis import FlaskRedis
 from flask_socketio import SocketIO, emit
 from twilio.base.exceptions import TwilioRestException
 from twilio.jwt.access_token import AccessToken
@@ -13,6 +15,8 @@ app = Flask(__name__)
 fake = Factory.create()
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
+app.config['REDIS_URL'] = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
+redis_client = FlaskRedis(app)
 
 # Substitute your Twilio AccountSid and ApiKey details
 account_sid = os.environ['TWILIO_ACCOUNT_SID']
@@ -76,8 +80,16 @@ def delete_all_rooms():
 
 @socketio.on('register')
 def test_message(message):
-    print(message)
-    emit('my response', {'data': message['data']})
+    room_name = message['data']['roomName']
+    user = message['data']['username']
+    rooms_users_dict = json.loads(redis_client.get('rooms_users') or "{}")
+    users_room = rooms_users_dict.get(room_name, [])
+    users_room.append(user)
+    rooms_users_dict[room_name] = list(set(users_room))
+    redis_client.set('rooms_users', json.dumps(rooms_users_dict))
+    rooms_users_dict = json.loads(redis_client.get('rooms_users') or "{}")
+    emit('user-registered', {'users': rooms_users_dict[room_name]})
+    print(rooms_users_dict)
 
 
 @socketio.on('call')
@@ -99,7 +111,7 @@ def test_connect():
 
 @socketio.on('disconnect')
 def test_disconnect():
-    print('Client disconnected')
+    pass
 
 
 if __name__ == '__main__':
