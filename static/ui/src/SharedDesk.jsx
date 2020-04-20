@@ -22,7 +22,7 @@ const SharedDesk = ({ roomName, token, handleLogout, username }) => {
                 callAll();
             },
             'Yes': () => { setTalk(true) },
-            'Hangup': () => { setTalk(false) }
+            'Hangup': () => { hangUp() }
         };
         annyang.addCommands(commands)
         annyang.start()
@@ -39,9 +39,11 @@ const SharedDesk = ({ roomName, token, handleLogout, username }) => {
         });
 
         socket.on("calls", data => {
-            setIncomingCall(true)
-            setIncomingCallRoom(data.data.roomName)
-            setIncomingCaller(data.data.caller)
+            if (data.data.caller != username && data.data.roomName != roomName) {
+                setIncomingCall(true)
+                setIncomingCallRoom(data.data.roomName)
+                setIncomingCaller(data.data.caller)
+            }
         });
     }, []);
 
@@ -53,9 +55,12 @@ const SharedDesk = ({ roomName, token, handleLogout, username }) => {
         socket.emit('call', {
             data: { roomName, otherUser, caller: username }
         });
-        setIncomingCall(false)
     }
 
+    const hangUp = () => {
+        setTalk(false)
+        setIncomingCall(false)
+    }
 
     return (
 
@@ -64,7 +69,7 @@ const SharedDesk = ({ roomName, token, handleLogout, username }) => {
 
                 {otherUsers.length == 0 ?
                     <div>
-                        <h3>This desk is empty right now!</h3><br/>
+                        <h3>This desk is empty right now!</h3><br />
                         <p>Ask your partner to join the desk <em>{roomName}</em>.</p>
                     </div>
                     : null}
@@ -76,14 +81,14 @@ const SharedDesk = ({ roomName, token, handleLogout, username }) => {
                             " " + item + ","
                         ))}
                         </h3>
-                        <br/>
+                        <br />
                         <p> Say <em>"Hey!"</em> aloud to talk to them or press the button below. 👇🏽</p>
                         <button onClick={() => callAll()}>Hey!</button>
                     </div>
                     : null}
             </div>
 
-            {incomingCall === true && incomingCaller != username && !talk?
+            {incomingCall === true && !talk ?
                 <div style={{ backgroundColor: "red" }}>
                     <h3>Incoming Call!</h3>
                     <h4>Say "Yes" to pickup!</h4>
