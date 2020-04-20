@@ -18,14 +18,14 @@ const SharedDesk = ({ roomName, token, handleLogout, username }) => {
     useEffect(() => {
         var otherUser = otherUsers[0] || "";
         var commands = {
-            "Hey partner": () => {
+            "hey": () => {
                 callAll();
             },
-            'Yes': () => {
+            'yes': () => {
                 setIncomingCall(false)
                 setTalk(true)
             },
-            'Hangup': () => { hangUp() }
+            'hangup': () => { hangUp() }
         };
         annyang.addCommands(commands)
         annyang.start()
