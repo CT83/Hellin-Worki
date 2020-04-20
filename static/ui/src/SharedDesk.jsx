@@ -18,7 +18,7 @@ const SharedDesk = ({ roomName, token, handleLogout, username }) => {
     useEffect(() => {
         var otherUser = otherUsers[0] || "";
         var commands = {
-            "Hey": () => {
+            "Hey partner": () => {
                 callAll();
             },
             'Yes': () => {
@@ -68,8 +68,8 @@ const SharedDesk = ({ roomName, token, handleLogout, username }) => {
 
     return (
 
-        <div class="container-fluid">
-            <div class="container" style={{ backgroundColor: "#DCD5CD", paddingBottom: "5px" }}>
+        <div className="container-fluid">
+            <div className="container" style={{ backgroundColor: "#DCD5CD", paddingBottom: "5px" }}>
 
                 {otherUsers.length == 0 ?
                     <div>

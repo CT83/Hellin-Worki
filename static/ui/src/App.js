@@ -7,7 +7,7 @@ const App = () => {
   return (
     <div className="app">
       <header>
-        <h1>🦃 Hellin' Worki</h1>
+        <h1>🐣 Hellin' Worki</h1>
       </header>
       <main>
         <VideoChat />
