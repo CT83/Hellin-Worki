@@ -32,7 +32,7 @@ const Lobby = ({
                 />
                 Share this with your partner
             </div>
-            <button type="submit">Submit</button>
+            <button type="submit">Join</button>
         </form>
     );
 };
