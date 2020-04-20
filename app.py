@@ -14,7 +14,7 @@ from twilio.rest import Client
 app = Flask(__name__)
 fake = Factory.create()
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
 app.config['REDIS_URL'] = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
 redis_client = FlaskRedis(app)
 
@@ -87,15 +87,14 @@ def test_message(message):
     users_room.append(user)
     rooms_users_dict[room_name] = list(set(users_room))
     redis_client.set('rooms_users', json.dumps(rooms_users_dict))
-    rooms_users_dict = json.loads(redis_client.get('rooms_users') or "{}")
-    emit('user-registered', {'users': rooms_users_dict[room_name]})
-    print(rooms_users_dict)
+    bef = rooms_users_dict[room_name]
+    emit('user-registered', {'users': bef,}, broadcast=True)
 
 
 @socketio.on('call')
 def test_message(message):
     print("incoming calls")
-    emit('incoming-call', {'data': message['data']}, broadcast=True)
+    emit('calls', {'data': message['data']}, broadcast=True)
 
 
 @socketio.on('my broadcast event')
@@ -105,8 +104,7 @@ def test_message(message):
 
 @socketio.on('connect', )
 def test_connect():
-    print("Someone connected!")
-    emit('api', {'data': 'Connected'})
+    pass
 
 
 @socketio.on('disconnect')
