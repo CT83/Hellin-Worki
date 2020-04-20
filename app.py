@@ -14,7 +14,7 @@ from twilio.rest import Client
 app = Flask(__name__, static_folder="static/ui/build")
 fake = Factory.create()
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
+socketio = SocketIO(app, cors_allowed_origins="*")
 app.config['REDIS_URL'] = os.getenv('REDIS_URL', 'redis://localhost:6379')
 redis_client = FlaskRedis(app)
 
