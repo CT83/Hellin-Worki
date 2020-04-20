@@ -6,7 +6,7 @@
 
 html {
   height: 100%;
-}
+  }
 
 body {
   font-family: Helvetica, Arial, sans-serif;
@@ -15,16 +15,25 @@ body {
 }
 
 header {
-  background: #f0293e;
-  color: #fff;
+  background: #F39A9D;
+  color: #000;
   text-align: center;
   flex-grow: 0;
-  margin-bottom: 2em;
+  /* margin-bottom: 2em; */
 }
 
 h1 {
   font-weight: 300;
   padding: 0.4em 0;
+}
+
+.container{
+padding-left: 50px;
+padding-right: 50px;
+padding-top: 5px;
+}
+
+.container-fluid{
 }
 
 #root {
@@ -71,7 +80,7 @@ form > div > input {
 }
 
 button {
-  background: #333e5a;
+  background: #6DB1BF;
   color: #fff;
   font-size: 16px;
   padding: 0.4em;
@@ -81,7 +90,7 @@ button {
   min-width: 50px;
 }
 button:hover {
-  filter: brightness(150%);
+  filter: brightness(120%);
 }
 
 .room {
@@ -134,7 +143,7 @@ video {
 }
 
 footer {
-  background: #333e5a;
+  background: #301A4B;
   color: #fff;
   text-align: center;
   flex-grow: 0;

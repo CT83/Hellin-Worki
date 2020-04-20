@@ -87,8 +87,8 @@ def test_message(message):
     users_room.append(user)
     rooms_users_dict[room_name] = list(set(users_room))
     redis_client.set('rooms_users', json.dumps(rooms_users_dict))
-    bef = rooms_users_dict[room_name]
-    emit('user-registered', {'users': bef,}, broadcast=True)
+    print(rooms_users_dict)
+    emit('user-registered', {'users': rooms_users_dict[room_name]}, broadcast=True)
 
 
 @socketio.on('call')

@@ -7,7 +7,7 @@ const App = () => {
   return (
     <div className="app">
       <header>
-        <h1>Video Chat with Hooks</h1>
+        <h1>🦃 Hellin' Worki</h1>
       </header>
       <main>
         <VideoChat />
@@ -18,7 +18,7 @@ const App = () => {
           <span role="img" aria-label="React">
             ⚛
           </span>{' '}
-          by <a href="https://twitter.com/philnash">philnash</a>
+          by <a href="https://twitter.com/philnash">Rohan Sawant</a>
         </p>
       </footer>
     </div>

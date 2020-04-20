@@ -21,7 +21,7 @@ const SharedDesk = ({ roomName, token, handleLogout, username }) => {
             "Hey": () => {
                 callAll();
             },
-            'Yes': () => { callAll() },
+            'Yes': () => { setTalk(true) },
             'Hangup': () => { setTalk(false) }
         };
         annyang.addCommands(commands)
@@ -34,7 +34,7 @@ const SharedDesk = ({ roomName, token, handleLogout, username }) => {
 
         socket.on("user-registered", data => {
             setAllUsers(data.users);
-            var others = allUsers.filter(item => item !== username)
+            var others = data.users.filter(item => item != username)
             setOtherUsers(others)
         });
 
@@ -53,27 +53,47 @@ const SharedDesk = ({ roomName, token, handleLogout, username }) => {
         socket.emit('call', {
             data: { roomName, otherUser, caller: username }
         });
+        setIncomingCall(false)
     }
 
 
     return (
 
-        <div>
-            <h1> People on the Desk <em>{roomName}</em> :
-            {allUsers.map((item, index) => (
-                " " + item + ","
-            ))}
-            </h1>
-            {incomingCall === true && incomingCaller != username ? <div style={{ backgroundColor: "red" }}>
-                <h3>Incoming Call!</h3>
-                <h4>Say "Yes" to pickup!</h4>
-                <br />
-                <br />
-                <button onClick={() => setIncomingCall(false)}>Close</button>
-            </div> : null}
-            {otherUsers.length > 0 ? <p> Say "Hey ..." to talk to them.</p> : null}
-            <button onClick={() => callAll()}>Talk</button>
-            <button onClick={handleLogout} style={{ right: 20, position: "absolute" }}>Log out!</button>
+        <div class="container-fluid">
+            <div class="container" style={{ backgroundColor: "#DCD5CD", paddingBottom: "5px" }}>
+
+                {otherUsers.length == 0 ?
+                    <div>
+                        <h3>This desk is empty right now!</h3><br/>
+                        <p>Ask your partner to join the desk <em>{roomName}</em>.</p>
+                    </div>
+                    : null}
+
+                {!talk && otherUsers.length > 0 ?
+                    <div>
+                        <h3> You are on desk <em>{roomName}</em> with :
+                {otherUsers.map((item, index) => (
+                            " " + item + ","
+                        ))}
+                        </h3>
+                        <br/>
+                        <p> Say <em>"Hey!"</em> aloud to talk to them or press the button below. 👇🏽</p>
+                        <button onClick={() => callAll()}>Hey!</button>
+                    </div>
+                    : null}
+            </div>
+
+            {incomingCall === true && incomingCaller != username && !talk?
+                <div style={{ backgroundColor: "red" }}>
+                    <h3>Incoming Call!</h3>
+                    <h4>Say "Yes" to pickup!</h4>
+                    <br />
+                    <br />
+                    <a onClick={() => setIncomingCall(false)}>Close</a>
+                </div> : null}
+
+
+            <a onClick={handleLogout} style={{ right: 20, top: 10, position: "absolute" }}>Log out</a>
             {talk ? <Room roomName={roomName} token={token} handleLogout={handleLogout} talk={talk} setTalk={setTalk} />
                 : null}
 
