@@ -48,13 +48,39 @@ const VideoChat = () => {
         );
     } else {
         render = (
-            <Lobby
-                username={username}
-                roomName={roomName}
-                handleUsernameChange={handleUsernameChange}
-                handleRoomNameChange={handleRoomNameChange}
-                handleSubmit={handleSubmit}
-            />
+            <div>
+                <Lobby
+                    username={username}
+                    roomName={roomName}
+                    handleUsernameChange={handleUsernameChange}
+                    handleRoomNameChange={handleRoomNameChange}
+                    handleSubmit={handleSubmit}
+                />
+
+                <div className="container">
+                    <hr></hr><br></br>
+                    <h3>Welcome to 🐣 Hellin' Worki </h3>
+                    <p>Hellin Worki is a video conferencing platform which seamlessly dials your coworkers when you call out their name, a "Yes" and you are connected.</p>
+                    <br />
+                    <h4>Problem</h4>
+                    <p>Telling your coworkers to be constantly connected on 4 hour long video calls is obtrusive, awkward and plain weird. You could stay connected
+                        and disable your video ...</p>
+                    <a href="https://dev.to/rohansawant/hellin-worki-now-joe-s-just-a-shout-away-twiliohackathon-2mh">Read the Blog</a>
+                    <br />
+                    <br />
+                    <h4>Working</h4>
+                    <ol>
+                        <li>You and your coworker Joe join a Room.</li>
+                        <li>Both enter their usernames</li>
+                        <li>The microphone listens and waits for you to say "Hey Joe!"</li>
+                        <li>When you do, Joe is notified and he can say, "Yes!" to pickup the call.</li>
+                    </ol>
+                    <br></br>
+                That's it!
+
+                </div>
+
+            </div>
         );
     }
     return render;
