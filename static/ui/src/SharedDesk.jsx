@@ -21,7 +21,10 @@ const SharedDesk = ({ roomName, token, handleLogout, username }) => {
             "Hey": () => {
                 callAll();
             },
-            'Yes': () => { setTalk(true) },
+            'Yes': () => {
+                setIncomingCall(false)
+                setTalk(true)
+            },
             'Hangup': () => { hangUp() }
         };
         annyang.addCommands(commands)
@@ -39,7 +42,7 @@ const SharedDesk = ({ roomName, token, handleLogout, username }) => {
         });
 
         socket.on("calls", data => {
-            if (data.data.caller != username && data.data.roomName != roomName) {
+            if (data.data.caller != username) {
                 setIncomingCall(true)
                 setIncomingCallRoom(data.data.roomName)
                 setIncomingCaller(data.data.caller)
@@ -55,6 +58,7 @@ const SharedDesk = ({ roomName, token, handleLogout, username }) => {
         socket.emit('call', {
             data: { roomName, otherUser, caller: username }
         });
+        setIncomingCall(false)
     }
 
     const hangUp = () => {
@@ -83,7 +87,7 @@ const SharedDesk = ({ roomName, token, handleLogout, username }) => {
                         </h3>
                         <br />
                         <p> Say <em>"Hey!"</em> aloud to talk to them or press the button below. 👇🏽</p>
-                        <button onClick={() => callAll()}>Hey!</button>
+                        {incomingCall !== true ? <button onClick={() => callAll()}>Hey!</button> : null}
                     </div>
                     : null}
             </div>
@@ -93,7 +97,10 @@ const SharedDesk = ({ roomName, token, handleLogout, username }) => {
                     <h3>Incoming Call!</h3>
                     <h4>Say "Yes" to pickup!</h4>
                     <br />
-                    <br />
+                    <button onClick={() => {
+                        setIncomingCall(false)
+                        setTalk(true)
+                    }}>Yes!</button>
                     <a onClick={() => setIncomingCall(false)}>Close</a>
                 </div> : null}
 

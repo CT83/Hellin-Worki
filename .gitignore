@@ -8,7 +8,6 @@ __pycache__/
 static/ui/node_modules
 # Distribution / packaging
 .Python
-build/
 develop-eggs/
 dist/
 downloads/

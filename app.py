@@ -2,7 +2,7 @@ import json
 import os
 
 from faker import Factory
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from flask_redis import FlaskRedis
 from flask_socketio import SocketIO, emit
@@ -11,7 +11,7 @@ from twilio.jwt.access_token import AccessToken
 from twilio.jwt.access_token.grants import VideoGrant
 from twilio.rest import Client
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static/ui/build")
 fake = Factory.create()
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
@@ -27,9 +27,14 @@ master_token = AccessToken(account_sid, api_key, api_secret)
 master_client = Client(account_sid, auth_token)
 
 
-@app.route('/')
-def index():
-    return app.send_static_file("ui/quickstart/public/index.html")
+# Serve React App
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
 
 
 @app.route('/token-room', methods=['POST'])
