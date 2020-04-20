@@ -22,7 +22,7 @@ const VideoChat = () => {
     const handleSubmit = useCallback(
         async event => {
             event.preventDefault();
-            const data = await fetch('http://localhost:5000/token-room', {
+            const data = await fetch('/token-room', {
                 method: 'POST',
                 body: JSON.stringify({
                     identity: username,

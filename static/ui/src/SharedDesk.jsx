@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Room from './Room';
 import annyang from './Annyang'
 import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = "/";
 
 
 const SharedDesk = ({ roomName, token, handleLogout, username }) => {
