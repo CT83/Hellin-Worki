@@ -23,7 +23,7 @@ That's it!
 
 ## Demo
 
-[![Hellin' Worki - Demo](docs/videothumb.png)](https://youtu.be/K1QOSTZRU1o)
+[![Hellin' Worki - Demo](docs/videothumb1.png)](https://youtu.be/K1QOSTZRU1o)
 
 ## Tech Stack
 
