@@ -1,8 +1,8 @@
-# Hellin' Worki - Now, Joe's just a shout away
+# 🐣 Hellin' Worki - Now, Joe's just a shout away
 
-![Image Logo](logos/linkedin_banner_image_1.png)
+Hellin' Worki is a video conferencing platform which seamlessly dials your coworkers when you call out their name, a  "Yes" and you are connected. 
 
-Hellin Worki is a video conferencing platform which seamlessly dials your coworkers when you call out their name, a  "Yes" and you are connected. 
+![Image Logo](docs/steps.png)
 
 ## Problem
 
@@ -15,11 +15,43 @@ Nope, but Hellin' Worki changes that.
 ## Working
 
 1. You and your coworker Joe join a Room.
-2. Both enter their usernames
-3. The microphone listens and waits for you to say "Hey Joe!"
-4. When you do, Joe is notified and he can say, "Yes!" to pickup the call.
+2. Both enter their names
+3. The microphone listens and waits for you to say "**Hey Joe**!"
+4. When you do, Joe is notified and he can say, "**Yes!**" to pickup the call.
 
 That's it!
+
+## Tech Stack
+
+* Video Conferencing - [Twilio Video API](https://www.twilio.com/docs/video)
+
+* Speech Recognition - [Annyang](https://www.talater.com/annyang/) 
+
+* Backend - Flask - Python
+
+* Frontend - [ReactJS](https://reactjs.org/)
+
+  
+
+## Why can I just run the live Demo?  😑
+
+Well, Twilio Video costs real money every time someone makes a call, and hosting it for free would not be cheap. So...yeah. 
+
+But, hey! If you need help setting this up send me an email!
+
+## How to Run
+
+1. Create the .env file. (Read more, in the Appendix)
+
+2. `docker-compose up --build` 
+
+3. Visit http://localhost:5000!
+
+   
+
+## Infrastructure 
+
+![](docs/arch.jpg)
 
 ## Advantages
 
@@ -28,31 +60,11 @@ That's it!
 * You don't have to stay connected to the video call for hours on end.
 * Your privacy is maintained as you are connected only when you respond.
 
-## Tech Stack
-
-* Twilio Video API
-
-* Backend - Flask with Python
-
-* Frontend - ReactJS
-
-  
-
-## How to Run
-
-1. Create the .env file. (Read more, in the Appendix)
-
-2. `docker-compose up --build` 
-
-3. Visit 
-
-   
-
-## Infrastructure 
-
 ## Appendix
 
-We need 4 things, add these in an `.env` file like this
+#### 1. Setup
+
+We need 5 things, add these in an `.env` file like this
 
 ```bash
 TWILIO_ACCOUNT_SID=XXXXXXXXXXX
@@ -65,3 +77,12 @@ TWILIO_AUTH_TOKEN=XXXXXXXXXXXX
 
 * Get the API Key and Secret from here - https://www.twilio.com/console/project/api-keys
 * Get the Account SID and Auth. Toke here - https://www.twilio.com/console
+
+#### 2. References
+
+* https://www.twilio.com/blog/video-chat-react-hooks
+
+#### 3. Hellin' Worki? What's with the name, Rohan?
+
+I used  a random name generator and it generated a random name. 
+

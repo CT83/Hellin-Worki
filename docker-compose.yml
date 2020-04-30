@@ -2,6 +2,17 @@ version: '3'
 services:
 
   redis:
+    container_name: hw-redis
     image: "redis:alpine"
     ports:
       - "6379:6379"
+
+  app:
+    container_name: hw-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"

@@ -15,7 +15,7 @@ app = Flask(__name__, static_folder="static/ui/build")
 fake = Factory.create()
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
-app.config['REDIS_URL'] = os.getenv('REDIS_URL', 'redis://localhost:6379')
+app.config['REDIS_URL'] = os.getenv('REDIS_URL', 'redis://{}:6379'.format(os.environ.get('REDIS_HOST', 'redis')))
 redis_client = FlaskRedis(app)
 
 # Substitute your Twilio AccountSid and ApiKey details
@@ -118,4 +118,4 @@ def test_disconnect():
 
 
 if __name__ == '__main__':
-    socketio.run(debug=True, port=5000, app=app)
+    socketio.run(debug=True, port=5000, app=app, host="0.0.0.0")
