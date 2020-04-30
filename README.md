@@ -30,26 +30,38 @@ That's it!
 
 ## Tech Stack
 
-* Twilio Video for the actual Video Conferencing
+* Twilio Video API
 
-* Flask Web Framework with Python for the backend.
+* Backend - Flask with Python
 
-* Simple HTML and Vanilla JS for the frontend
-
-  and more. 
+* Frontend - ReactJS
 
   
 
-## The Build!
-
-How far along am I?
-
-I just got the video conferencing demos by Twilio and the Hotword Detection working, so far so good!
-
 ## How to Run
 
-> Coming Soon
+1. Create the .env file. (Read more, in the Appendix)
+
+2. `docker-compose up --build` 
+
+3. Visit 
+
+   
 
 ## Infrastructure 
 
-> Coming Soon  
+## Appendix
+
+We need 4 things, add these in an `.env` file like this
+
+```bash
+TWILIO_ACCOUNT_SID=XXXXXXXXXXX
+TWILIO_API_KEY=XXXXXXXXXXXXXXX
+TWILIO_API_SECRET=XXXXXXXXXXXX
+TWILIO_AUTH_TOKEN=XXXXXXXXXXXX
+```
+
+
+
+* Get the API Key and Secret from here - https://www.twilio.com/console/project/api-keys
+* Get the Account SID and Auth. Toke here - https://www.twilio.com/console
