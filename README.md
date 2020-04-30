@@ -21,23 +21,21 @@ Nope, but Hellin' Worki changes that.
 
 That's it!
 
+## Demo
+
+[![Hellin' Worki - Demo](docs/videothumb.png)](https://youtu.be/K1QOSTZRU1o)
+
 ## Tech Stack
 
 * Video Conferencing - [Twilio Video API](https://www.twilio.com/docs/video)
 
 * Speech Recognition - [Annyang](https://www.talater.com/annyang/) 
 
-* Backend - Flask - Python
+* Backend - [Flask](https://flask.palletsprojects.com/en/1.1.x/) - Python
 
-* Frontend - [ReactJS](https://reactjs.org/)
+* Frontend - [ReactJS](https://reactjs.org/) - JavaScript
 
   
-
-## Why can I just run the live Demo?  😑
-
-Well, Twilio Video costs real money every time someone makes a call, and hosting it for free would not be cheap. So...yeah. 
-
-But, hey! If you need help setting this up send me an email!
 
 ## How to Run
 
@@ -60,6 +58,40 @@ But, hey! If you need help setting this up send me an email!
 * You don't have to stay connected to the video call for hours on end.
 * Your privacy is maintained as you are connected only when you respond.
 
+## Screenshots
+
+> Home Page
+
+![](docs/home.png)
+
+> Empty Room
+
+![](docs/empty.png)
+
+> Incoming Call
+
+![](docs/call.png)
+
+> Call in Progress
+
+![](docs/call-in.png)
+
+## Why can I just run the live Demo?  😑
+
+Well, Twilio Video costs real money *(0.01$ per participant/minute)* every time someone makes a call, and hosting it for free would not be cheap. So...yeah. 
+
+But, hey! If you need help setting this up send me an email!
+
+## License
+
+Apache License 2.0 
+
+A permissive license whose main conditions require preservation of copyright and license notices. Contributors provide an express grant of patent rights. Licensed works, modifications, and larger works may be distributed under different terms and without source code.
+
+## References
+
+* https://www.twilio.com/blog/video-chat-react-hooks
+
 ## Appendix
 
 #### 1. Setup
@@ -78,11 +110,7 @@ TWILIO_AUTH_TOKEN=XXXXXXXXXXXX
 * Get the API Key and Secret from here - https://www.twilio.com/console/project/api-keys
 * Get the Account SID and Auth. Toke here - https://www.twilio.com/console
 
-#### 2. References
-
-* https://www.twilio.com/blog/video-chat-react-hooks
-
-#### 3. Hellin' Worki? What's with the name, Rohan?
+#### 2. Hellin' Worki? What's with the name, Rohan?
 
 I used  a random name generator and it generated a random name. 
 
