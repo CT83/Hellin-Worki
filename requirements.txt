@@ -19,7 +19,7 @@ httplib2==0.18.0
 idna==2.9
 importlib-metadata==1.6.0
 itsdangerous==1.1.0
-Jinja2==2.11.1
+Jinja2==2.11.3
 MarkupSafe==1.1.1
 monotonic==1.5
 more-itertools==8.2.0
