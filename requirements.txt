@@ -9,7 +9,7 @@ dnspython==1.16.0
 eventlet==0.25.2
 fake-factory==0.5.3
 Flask==1.1.2
-Flask-Cors==3.0.8
+Flask-Cors==3.0.9
 flask-redis==0.4.0
 Flask-SocketIO==4.2.1
 gevent==1.5.0
